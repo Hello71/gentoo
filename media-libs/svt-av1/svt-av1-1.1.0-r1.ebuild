@@ -21,7 +21,7 @@ fi
 LICENSE="BSD-2 Apache-2.0 BSD ISC LGPL-2.1+ MIT"
 SLOT="0"
 
-BDEPEND="amd64? ( dev-lang/yasm )"
+BDEPEND="amd64? ( || ( dev-lang/yasm dev-lang/nasm ) )"
 
 multilib_src_configure() {
 	append-ldflags -Wl,-z,noexecstack
@@ -33,8 +33,6 @@ multilib_src_configure() {
 		-DBUILD_TESTING=OFF
 		-DCMAKE_OUTPUT_DIRECTORY="${BUILD_DIR}"
 	)
-
-	[[ ${ABI} != amd64 ]] && mycmakeargs+=( -DCOMPILE_C_ONLY=ON )
 
 	cmake_src_configure
 }
